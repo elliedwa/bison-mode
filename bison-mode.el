@@ -84,8 +84,11 @@
 ;; *************** internal vars ***************
 
 (defvar bison--declarers '("%union" "%token" "%type"
-			   "%left" "%right" "%nonassoc")
+			   "%left" "%right" "%nonassoc"
+                           "%code")
   "commands which can declare a token or state type")
+
+(defvar bison--keywords '("requires", "provides", "top", "imports"))
 
 (defvar bison--word-constituent-re "\\(\\sw\\|_\\)")
 (defvar bison--production-re
@@ -189,9 +192,8 @@ key's electric variable"
 (defconst bison-font-lock-keywords
   (append
    (list
-    (cons (concat "^\\(" (regexp-opt bison--declarers) "\\)")
-	  '(1 font-lock-keyword-face))
-    )
+    (cons (concat "^\\(" (regexp-opt (list bison--declarers bison--keywords)) "\\)")
+	  '(1 font-lock-keyword-face)))
    c-font-lock-keywords)
   "Default expressions to highlight in Bison mode")
 
